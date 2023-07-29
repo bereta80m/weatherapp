@@ -18,7 +18,7 @@ const raleway = Raleway({
 
 function Sidebar() {
   const { IsDialogOpen, HandleClose, setIsDialogOpen } = UseDialog();
-  const { FullWeekData } = UseGlobal();
+  const { FullWeekData,inputsCities } = UseGlobal();
 
   const GetTime = (item)=>{
     const datetime = new Date (item * 1000)
@@ -28,7 +28,6 @@ function Sidebar() {
     return objectMoment.format('ddd, D MMM')
   }
   
-  const city = localStorage.getItem("city")
 
   return (
     <div className="Sidebar w-full h-full relative  ">
@@ -70,7 +69,7 @@ function Sidebar() {
             <p>*</p>
             <p> {GetTime(FullWeekData[0]?.dt)}</p>
           </div>
-          <p className="flex items-center gap-2"><MdLocationOn className="text-white/50" />{city}</p>
+          <p className="flex items-center gap-2"><MdLocationOn className="text-white/50" />{inputsCities}</p>
         </div>
       </div>
     </div>

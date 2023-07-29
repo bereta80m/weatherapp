@@ -8,6 +8,7 @@ const API_KEY = "87998f44ea138cfc20f2eba1bc92bb6c";
 function GlobalProvider({ children }) {
   const [weatherData, setWeatherData] = useState(null);
   const [FullWeekData, setFullWeekData] = useState([])
+  const [inputsCities, setInputsCities] = useState("")
   const [Cities, setCities] = useState([  {name:"London",country:"RU"},
   {name:"Barcelona",country:"BA"},
   {name:"Long Beach",country:"LB"}])
@@ -16,7 +17,7 @@ function GlobalProvider({ children }) {
     try {
       const res = await fetch(`https://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=${API_KEY}&units=metric`);
       const data = await res.json();
-      localStorage.setItem("city",city )
+      setInputsCities(city)
       setWeatherData(data)
     } catch (error) {
       console.log("error is on GetWeatherData"+error);
@@ -29,7 +30,6 @@ function GlobalProvider({ children }) {
       const data = await res.json();
       const Filtrar = data.filter((fil)=> item === "" ? fil : fil.name.toLowerCase().includes(item.toLowerCase()))
       setCities(Filtrar)
-      const city = localStorage.getItem("city")
     } catch (error) {
       console.log("error is on GetCities"+error);
     }
@@ -75,7 +75,7 @@ function GlobalProvider({ children }) {
     GetWeeksAndTodaysWeatherData()
   }, [weatherData]);
 
-  return <GlobalContext.Provider value={{weatherData,GetWeatherData,FullWeekData,GetCities,Cities,FullWeekData}}>{children}</GlobalContext.Provider>;
+  return <GlobalContext.Provider value={{inputsCities,weatherData,GetWeatherData,FullWeekData,GetCities,Cities,FullWeekData}}>{children}</GlobalContext.Provider>;
 }
 
 export default GlobalProvider;
